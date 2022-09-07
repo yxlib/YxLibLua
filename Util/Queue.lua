@@ -5,7 +5,16 @@
 require("Assets.YxLibLua.Util.Class")
 
 ---@class Queue @Queue class
-local Queue = class("Queue", nil, nil)
+---@field maxSize number
+---@field queSize number
+---@field first number
+---@field last number
+local Queue = {
+    ---@param maxSize number @max size
+    ---@return Queue @Queue object
+    new = function(maxSize) end
+}
+class(Queue, "Queue", nil)
 
 --- ctor method
 function Queue:_ctor(...)

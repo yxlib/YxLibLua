@@ -7,7 +7,16 @@ local Const = require("Assets.YxLibLua.BT.Const")
 local BaseBehaviorNode = require("Assets.YxLibLua.BT.BaseBehaviorNode")
 
 ---@class ControlNode @ControlNode class
-local ControlNode = class("ControlNode", nil, BaseBehaviorNode)
+---@field nodeId number @node id
+---@field nodeType number @node type
+---@field subNodes Array @sub nodes
+local ControlNode = {
+    ---@param nodeId number @node id
+    ---@param nodeType number @node type
+    ---@return ControlNode @ControlNode object
+    new = function(nodeId, nodeType) end
+}
+class(ControlNode, "ControlNode", BaseBehaviorNode)
 
 --- ctor method
 function ControlNode:_ctor(...)

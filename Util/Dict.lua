@@ -5,7 +5,11 @@
 require("Assets.YxLibLua.Util.Class")
 
 ---@class Dict @Dict class
-local Dict = class("Dict", nil, nil)
+local Dict = {
+    ---@return Dict @Dict object
+    new = function() end
+}
+class(Dict, "Dict", nil)
 
 --- set
 ---@param k any

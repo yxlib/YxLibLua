@@ -7,7 +7,14 @@ local Observer = require("Assets.YxLibLua.Notify.Observer")
 local Msg = require("Assets.YxLibLua.Notify.Msg")
 
 ---@class Dispatcher @Dispatcher class
-local Dispatcher = class("Dispatcher", nil, nil)
+---@field msgName string
+---@field observers Array
+local Dispatcher = {
+    ---@param msgName string @msg name
+    ---@return Dispatcher @Dispatcher object
+    new = function(msgName) end
+}
+class(Dispatcher, "Dispatcher", nil)
 
 --- ctor method
 function Dispatcher:_ctor(...)

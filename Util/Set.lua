@@ -6,7 +6,11 @@ require("Assets.YxLibLua.Util.Class")
 local Array = require("Assets.YxLibLua.Util.Array")
 
 ---@class Set @Set class
-local Set = class("Set", nil, nil)
+local Set = {
+    ---@return Set @Set object
+    new = function() end
+}
+class(Set, "Set", nil)
 
 --- add an element
 ---@param element any

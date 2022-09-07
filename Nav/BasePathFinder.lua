@@ -10,8 +10,12 @@ local Grid = require("Assets.YxLibLua.Nav.Grid")
 ---@field openList Array @open list
 ---@field closeList Array @close list
 ---@field lastNode IPathNode @last node
----@field new function @function(imp IPathFinderImpl)
-local BasePathFinder = class("BasePathFinder", nil, nil)
+local BasePathFinder = {
+    ---@param impl IPathFinderImpl @implement
+    ---@return BasePathFinder @BasePathFinder object
+    new = function(impl) end
+}
+class(BasePathFinder, "BasePathFinder", nil)
 
 --- ctor method
 function BasePathFinder:_ctor(...)

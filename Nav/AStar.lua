@@ -12,12 +12,14 @@ local AStarNode = require("Assets.YxLibLua.Nav.AStarNode")
 ---@field openList Array @open list
 ---@field closeList Array @close list
 ---@field lastNode IPathNode @last node
----@field new function @function(imp IPathFinderImpl)
-local AStar = class("AStar", nil, BasePathFinder)
+local AStar = {
+    ---@return AStar @AStar object
+    new = function() end
+}
+class(AStar, "AStar", BasePathFinder)
 
 --- ctor method
 function AStar:_ctor(...)
-    local params = {...}
     super(self, self)
 end
 

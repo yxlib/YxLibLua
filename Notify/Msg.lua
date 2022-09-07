@@ -5,7 +5,15 @@
 require("Assets.YxLibLua.Util.Util")
 
 ---@class Msg @Msg class
-local Msg = class("Msg", nil, nil)
+---@field name string
+---@field params any[]
+local Msg = {
+    ---@param name string @name
+    ---@param params any[]
+    ---@return Msg @Msg object
+    new = function(name, params) end
+}
+class(Msg, "Msg", nil)
 
 --- ctor method
 function Msg:_ctor(...)

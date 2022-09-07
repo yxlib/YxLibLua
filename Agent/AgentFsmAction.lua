@@ -5,7 +5,15 @@
 local Util = require("Assets.YxLibLua.Util.Util")
 
 ---@class AgentFsmAction @AgentFsmAction class
-local AgentFsmAction = class("AgentFsmAction", nil, nil)
+---@field name string @name
+---@field listener IAgentFsmActionListener @listener
+local AgentFsmAction = {
+    ---@param name string @name
+    ---@param listener IAgentFsmActionListener @listener
+    ---@return AgentFsmAction @AgentFsmAction object
+    new = function(name, listener) end
+}
+class(AgentFsmAction, "AgentFsmAction", nil)
 
 --- ctor method
 function AgentFsmAction:_ctor(...)

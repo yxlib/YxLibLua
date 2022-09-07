@@ -5,7 +5,11 @@
 require("Assets.YxLibLua.Util.Class")
 
 ---@class Array @Array class
-local Array = class("Array", nil, nil)
+local Array = {
+    ---@return Array @Array object
+    new = function() end
+}
+class(Array, "Array", nil)
 
 --- clone the array
 ---@return Array @the clone one

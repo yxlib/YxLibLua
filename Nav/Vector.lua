@@ -7,8 +7,13 @@ local Util = require("Assets.YxLibLua.Util.Util")
 ---@class Vector @Vector class
 ---@field x number @x
 ---@field y number @y
----@field new function @function(x, y)
-local Vector = class("Vector", nil, nil)
+local Vector = {
+    ---@param x number @x
+    ---@param y number @y
+    ---@return Vector @Vector object
+    new = function(x, y) end
+}
+class(Vector, "Vector", nil)
 
 --- ctor method
 function Vector:_ctor(...)

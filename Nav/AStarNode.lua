@@ -12,8 +12,16 @@ local BasePathNode = require("Assets.YxLibLua.Nav.BasePathNode")
 ---@field minGValue number @min G value
 ---@field grid Grid @grid
 ---@field children Array @children
----@field new function @function(parent, vecParent, minGValue, col, row)
-local AStarNode = class("AStarNode", nil, BasePathNode)
+local AStarNode = {
+    ---@param parent IPathNode @parent node
+    ---@param vecParent Vector @parent vector
+    ---@param minGValue number @min G value
+    ---@param col number @col
+    ---@param row number @row
+    ---@return AStarNode @AStarNode object
+    new = function(parent, vecParent, minGValue, col, row) end
+}
+class(AStarNode, "AStarNode", BasePathNode)
 
 --- ctor method
 function AStarNode:_ctor(...)

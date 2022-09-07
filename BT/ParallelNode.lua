@@ -7,7 +7,13 @@ local Const = require("Assets.YxLibLua.BT.Const")
 local ControlNode = require("Assets.YxLibLua.BT.ControlNode")
 
 ---@class ParallelNode @ParallelNode class
-local ParallelNode = class("ParallelNode", nil, ControlNode)
+---@field nodeId number @node id
+local ParallelNode = {
+    ---@param nodeId number @node id
+    ---@return ParallelNode @ParallelNode object
+    new = function(nodeId) end
+}
+class(ParallelNode, "ParallelNode", ControlNode)
 
 --- ctor method
 function ParallelNode:_ctor(...)

@@ -8,7 +8,19 @@ local IFsmAction = require("Assets.YxLibLua.Fsm.IFsmAction")
 local IFsmState = require("Assets.YxLibLua.Fsm.IFsmState")
 
 ---@class FsmMachine @FsmMachine class
-local FsmMachine = class("FsmMachine", nil, nil)
+---@field id number @id
+---@field state string @state
+---@field oldStates Array @old states
+---@field dictName2State Dict @bind name and state
+---@field dictName2Action Dict @bind name and action
+---@field dictName2transition Dict @bind name and transition
+local FsmMachine = {
+    ---@param id number @id
+    ---@param state string @state
+    ---@return FsmMachine @FsmMachine object
+    new = function(id, state) end
+}
+class(FsmMachine, "FsmMachine", nil)
 
 --- ctor method
 function FsmMachine:_ctor(...)
@@ -18,7 +30,7 @@ function FsmMachine:_ctor(...)
     self.oldStates = Util.Array.new()
     self.dictName2State = Util.Dict.new()
     self.dictName2Action = Util.Dict.new()
-    self.dictName2transition = Util.Dict.new()
+    self.dictName2Transition = Util.Dict.new()
 end
 
 --- get id
@@ -111,7 +123,7 @@ function FsmMachine:addTransition(name, tran)
     assert(name == "", "name is empty")
     assert(act, "act is nil")
 
-    self.dictName2transition:set(name, tran)
+    self.dictName2Transition:set(name, tran)
 end
 
 --- remove transition
@@ -120,9 +132,9 @@ function FsmMachine:removeTransition(name)
     assert(name, "name is nil")
     assert(name == "", "name is empty")
 
-    local tran, ok = self.dictName2transition:get(name)
+    local tran, ok = self.dictName2Transition:get(name)
     if ok then
-        self.dictName2transition:delete(name)
+        self.dictName2Transition:delete(name)
     end
 end
 
@@ -134,7 +146,7 @@ function FsmMachine:getTransition(name)
     assert(name, "name is nil")
     assert(name == "", "name is empty")
 
-    local tran, ok = self.dictName2transition:get(name)
+    local tran, ok = self.dictName2Transition:get(name)
     return tran, ok
 end
 
@@ -159,7 +171,7 @@ function FsmMachine:trigger(evt, ...)
     assert(self.state == "", "state is empty")
 
     local triggerTran = nil
-    for name, tran in pairs(self.dictName2transition) do
+    for name, tran in pairs(self.dictName2Transition) do
         if tran.from == self.state and tran.event == evt then
             triggerTran = tran
         end

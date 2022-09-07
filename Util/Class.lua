@@ -3,14 +3,13 @@
 -- license that can be found in the LICENSE file.
 
 -- class example
--- local TestClass = class(
---     "TestClass",
---     {
---         size = 2,
---         count = 0
---     },
---     nil
--- )
+-- local TestClass = {
+--     size = 2,
+--     count = 0,
+
+--     new = function(count, age) end
+-- }
+-- class(TestClass, "TestClass", nil)
 
 -- function TestClass:_ctor(...)
 --     local params = {...}
@@ -18,7 +17,11 @@
 --     self.age = params[2]
 -- end
 
--- local TestClass2 = class("TestClass2", nil, TestClass)
+-- local TestClass2 = {
+--     new = function(count, age) end
+-- }
+-- class(TestClass2, "TestClass2", TestClass)
+
 -- function TestClass2:_ctor(...)
 --     local params = {...}
 --     super(self, params[1], params[2])
@@ -43,29 +46,27 @@
 --- t._className string, class name
 --- t._super table, super class
 --- t._ctor function, define member fields
+---@param t table @define interface of new function, and static fields
 ---@param className string @class name
----@param staticFields table @define static fields
 ---@param super table @super class
 ---@return table @class template
-function class(className, staticFields, super)
-    local t = {
-        _className = className,
-        _super = super,
-        _ctor = nil
-    }
+function class(t, className, super)
+    t._className = className
+    t._super = super
+    t._ctor = nil
 
     -- static fields
-    if staticFields ~= nil then
-        for k, v in pairs(staticFields) do
-            if k == "_ctor" then
-                goto continue
-            end
+    -- if staticFields ~= nil then
+    --     for k, v in pairs(staticFields) do
+    --         if k == "_ctor" then
+    --             goto continue
+    --         end
 
-            t[k] = v
+    --         t[k] = v
 
-            ::continue::
-        end
-    end
+    --         ::continue::
+    --     end
+    -- end
 
     -- extends super
     if t._super ~= nil then

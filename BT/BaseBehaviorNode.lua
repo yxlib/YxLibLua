@@ -6,7 +6,20 @@ local Util = require("Assets.YxLibLua.Util.Util")
 local Const = require("Assets.YxLibLua.BT.Const")
 
 ---@class BaseBehaviorNode @BaseBehaviorNode class
-local BaseBehaviorNode = class("BaseBehaviorNode", nil, nil)
+---@field nodeId number @node id
+---@field actionId number @action id
+---@field maxStep number @max step
+---@field nodeType number @node type
+---@field state number @state
+---@field step number @step
+local BaseBehaviorNode = {
+    ---@param nodeId number @node id
+    ---@param actionId number @action id
+    ---@param maxStep number @max step
+    ---@return BaseBehaviorNode @BaseBehaviorNode object
+    new = function(nodeId, actionId, maxStep) end
+}
+class(BaseBehaviorNode, "BaseBehaviorNode", nil)
 
 --- ctor method
 function BaseBehaviorNode:_ctor(...)

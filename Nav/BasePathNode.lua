@@ -11,8 +11,16 @@ local Grid = require("Assets.YxLibLua.Nav.Grid")
 ---@field minGValue number @min G value
 ---@field grid Grid @grid
 ---@field children Array @children
----@field new function @function(parent, vecParent, minGValue, col, row)
-local BasePathNode = class("BasePathNode", nil, nil)
+local BasePathNode = {
+    ---@param parent IPathNode @parent node
+    ---@param vecParent Vector @parent vector
+    ---@param minGValue number @min G value
+    ---@param col number @col
+    ---@param row number @row
+    ---@return BasePathNode @BasePathNode object
+    new = function(parent, vecParent, minGValue, col, row) end
+}
+class(BasePathNode, "BasePathNode", nil)
 
 --- ctor method
 function BasePathNode:_ctor(...)

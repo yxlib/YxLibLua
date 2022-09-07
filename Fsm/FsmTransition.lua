@@ -5,7 +5,19 @@
 local Util = require("Assets.YxLibLua.Util.Util")
 
 ---@class FsmTransition @FsmTransition class
-local FsmTransition = class("FsmTransition", nil, nil)
+---@field from string @from state
+---@field event string @event
+---@field to string @to state
+---@field action string @action
+local FsmTransition = {
+    ---@param from string @from state
+    ---@param event string @event
+    ---@param to string @to state
+    ---@param action string @action
+    ---@return FsmTransition @FsmTransition object
+    new = function(from, event, to, action) end
+}
+class(FsmTransition, "FsmTransition", nil)
 
 --- ctor method
 function FsmTransition:_ctor(...)

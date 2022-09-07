@@ -7,8 +7,13 @@ local Util = require("Assets.YxLibLua.Util.Util")
 ---@class Grid @Grid class
 ---@field col number @col
 ---@field row number @row
----@field new function @function(col, row)
-local Grid = class("Grid", nil, nil)
+local Grid = {
+    ---@param col number @col
+    ---@param row number @row
+    ---@return Grid @Grid object
+    new = function(col, row) end
+}
+class(Grid, "Grid", nil)
 
 --- ctor method
 function Grid:_ctor(...)

@@ -3,9 +3,22 @@
 -- license that can be found in the LICENSE file.
 
 local Util = require("Assets.YxLibLua.Util.Util")
+local BT = require("Assets.YxLibLua.BT.BT")
 
 ---@class AgentState @AgentState class
-local AgentState = class("AgentState", nil, nil)
+---@field bt BehaviorTree @behavior tree
+---@field enterFunc function @function(fromState string)
+---@field updateFunc function @function(dt number)
+---@field exitFunc function @function(toState string)
+local AgentState = {
+    ---@param bt BehaviorTree @behavior tree
+    ---@param enterFunc function @function(fromState string)
+    ---@param updateFunc function @function(dt number)
+    ---@param exitFunc function @function(toState string)
+    ---@return AgentState @AgentState object
+    new = function(bt, enterFunc, updateFunc, exitFunc) end
+}
+class(AgentState, "AgentState", nil)
 
 --- ctor method
 function AgentState:_ctor(...)

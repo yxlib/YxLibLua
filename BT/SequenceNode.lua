@@ -7,7 +7,13 @@ local Const = require("Assets.YxLibLua.BT.Const")
 local ControlNode = require("Assets.YxLibLua.BT.ControlNode")
 
 ---@class SequenceNode @SequenceNode class
-local SequenceNode = class("SequenceNode", nil, ControlNode)
+---@field nodeId number @node id
+local SequenceNode = {
+    ---@param nodeId number @node id
+    ---@return SequenceNode @SequenceNode object
+    new = function(nodeId) end
+}
+class(SequenceNode, "SequenceNode", ControlNode)
 
 --- ctor method
 function SequenceNode:_ctor(...)

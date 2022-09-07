@@ -7,7 +7,12 @@ local Msg = require("Assets.YxLibLua.Notify.Msg")
 local Dispatcher = require("Assets.YxLibLua.Notify.Dispatcher")
 
 ---@class NotifyCenter @NotifyCenter class
-local NotifyCenter = class("NotifyCenter", nil, nil)
+---@field dictName2Dispatcher Dict
+local NotifyCenter = {
+    ---@return NotifyCenter @NotifyCenter object
+    new = function() end
+}
+class(NotifyCenter, "NotifyCenter", nil)
 
 --- ctor method
 function NotifyCenter:_ctor(...)

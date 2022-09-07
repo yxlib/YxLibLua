@@ -7,7 +7,14 @@ local Const = require("Assets.YxLibLua.BT.Const")
 local SequenceNode = require("Assets.YxLibLua.BT.SequenceNode")
 
 ---@class BehaviorTree @BehaviorTree class
-local BehaviorTree = class("BehaviorTree", nil, nil)
+---@field treeId number @tree id
+---@field rootNode SequenceNode @root node
+local BehaviorTree = {
+    ---@param treeId number @tree id
+    ---@return BehaviorTree @BehaviorTree object
+    new = function(treeId) end
+}
+class(BehaviorTree, "BehaviorTree", nil)
 
 --- ctor method
 function BehaviorTree:_ctor(...)

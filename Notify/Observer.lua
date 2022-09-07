@@ -5,7 +5,17 @@
 require("Assets.YxLibLua.Util.Util")
 
 ---@class Observer @Observer class
-local Observer = class("Observer", nil, nil)
+---@field object any
+---@field callback function
+---@field once boolean
+local Observer = {
+    ---@param object any @object
+    ---@param callback function @callback
+    ---@param once boolean @is on notify once
+    ---@return Observer @Observer object
+    new = function(object, callback, once) end
+}
+class(Observer, "Observer", nil)
 
 --- ctor method
 function Observer:_ctor(...)

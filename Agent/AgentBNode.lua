@@ -4,9 +4,27 @@
 
 local Util = require("Assets.YxLibLua.Util.Util")
 local BT = require("Assets.YxLibLua.BT.BT")
+local IAgentBNodeListener = require("Assets.YxLibLua.Agent.IAgentBNodeListener")
 
 ---@class AgentBNode @AgentBNode class
-local AgentBNode = class("AgentBNode", nil, BT.BaseBehaviorNode)
+---@field nodeId number @node id
+---@field actionId number @action id
+---@field maxStep number @max step
+---@field nodeType number @node type
+---@field state number @state
+---@field step number @step
+---@field listener IAgentBNodeListener @listener
+---@field params any[] @params
+local AgentBNode = {
+    ---@param nodeId number @node id
+    ---@param actionId number @action id
+    ---@param maxStep number @max step
+    ---@param listener IAgentBNodeListener @listener
+    ---@param params any[] @params
+    ---@return AgentBNode @AgentBNode object
+    new = function(nodeId, actionId, maxStep, listener, params) end
+}
+class(AgentBNode, "AgentBNode", BT.BaseBehaviorNode)
 
 --- ctor method
 function AgentBNode:_ctor(...)

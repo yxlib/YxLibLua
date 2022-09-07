@@ -11,7 +11,17 @@ local AgentState = require("Assets.YxLibLua.Agent.AgentState")
 local AgentFsmAction = require("Assets.YxLibLua.Agent.AgentFsmAction")
 
 ---@class BaseAgent @BaseAgent class
-local BaseAgent = class("BaseAgent", nil, nil)
+---@field agentId number @agent id
+---@field fsm FsmMachine  @fsm
+---@field dictName2State Dict @bind name and AgentFsmState
+---@field dictName2FsmActionFunc Dict @bind name and fsm action
+---@field dictId2BNodeActionFunc Dict @bind name and behavior tree action
+local BaseAgent = {
+    ---@param agentId number @agent id
+    ---@return BaseAgent @BaseAgent object
+    new = function(agentId) end
+}
+class(BaseAgent, "BaseAgent", nil)
 
 --- ctor method
 function BaseAgent:_ctor(...)
