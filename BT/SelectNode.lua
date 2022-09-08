@@ -6,7 +6,7 @@ local Util = require("Assets.YxLibLua.Util.Util")
 local Const = require("Assets.YxLibLua.BT.Const")
 local ControlNode = require("Assets.YxLibLua.BT.ControlNode")
 
----@class SelectNode @SelectNode class
+---@class SelectNode : ControlNode @SelectNode class
 ---@field nodeId number @node id
 local SelectNode = {
     ---@param nodeId number @node id

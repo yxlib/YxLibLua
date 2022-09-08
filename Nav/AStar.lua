@@ -7,7 +7,7 @@ local Grid = require("Assets.YxLibLua.Nav.Grid")
 local BasePathFinder = require("Assets.YxLibLua.Nav.BasePathFinder")
 local AStarNode = require("Assets.YxLibLua.Nav.AStarNode")
 
----@class AStar @AStar class
+---@class AStar : BasePathFinder @AStar class
 ---@field impl IPathFinderImpl @implement
 ---@field openList Array @open list
 ---@field closeList Array @close list

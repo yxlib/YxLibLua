@@ -6,7 +6,7 @@ local Util = require("Assets.YxLibLua.Util.Util")
 local Const = require("Assets.YxLibLua.BT.Const")
 local BaseBehaviorNode = require("Assets.YxLibLua.BT.BaseBehaviorNode")
 
----@class ControlNode @ControlNode class
+---@class ControlNode : BaseBehaviorNode @ControlNode class
 ---@field nodeId number @node id
 ---@field nodeType number @node type
 ---@field subNodes Array @sub nodes

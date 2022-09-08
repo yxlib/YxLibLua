@@ -6,7 +6,7 @@ local Util = require("Assets.YxLibLua.Util.Util")
 local BT = require("Assets.YxLibLua.BT.BT")
 local IAgentBNodeListener = require("Assets.YxLibLua.Agent.IAgentBNodeListener")
 
----@class AgentBNode @AgentBNode class
+---@class AgentBNode : BaseBehaviorNode @AgentBNode class
 ---@field nodeId number @node id
 ---@field actionId number @action id
 ---@field maxStep number @max step

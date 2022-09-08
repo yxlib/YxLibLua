@@ -6,7 +6,7 @@ local Util = require("Assets.YxLibLua.Util.Util")
 local Grid = require("Assets.YxLibLua.Nav.Grid")
 local BasePathNode = require("Assets.YxLibLua.Nav.BasePathNode")
 
----@class AStarNode @AStarNode class
+---@class AStarNode : BasePathNode @AStarNode class
 ---@field parent IPathNode @parent node
 ---@field vecParent Vector @parent vector
 ---@field minGValue number @min G value

@@ -6,7 +6,7 @@ local Util = require("Assets.YxLibLua.Util.Util")
 local Const = require("Assets.YxLibLua.BT.Const")
 local ControlNode = require("Assets.YxLibLua.BT.ControlNode")
 
----@class ParallelNode @ParallelNode class
+---@class ParallelNode : ControlNode @ParallelNode class
 ---@field nodeId number @node id
 local ParallelNode = {
     ---@param nodeId number @node id
