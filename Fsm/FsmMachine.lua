@@ -16,9 +16,8 @@ local IFsmState = require("Assets.YxLibLua.Fsm.IFsmState")
 ---@field dictName2transition Dict @bind name and transition
 local FsmMachine = {
     ---@param id number @id
-    ---@param state string @state
     ---@return FsmMachine @FsmMachine object
-    new = function(id, state) end
+    new = function(id) end
 }
 class(FsmMachine, "FsmMachine", nil)
 
@@ -26,7 +25,8 @@ class(FsmMachine, "FsmMachine", nil)
 function FsmMachine:_ctor(...)
     local params = {...}
     self.id = params[1]
-    self.state = params[2]
+
+    self.state = ""
     self.oldStates = Util.Array.new()
     self.dictName2State = Util.Dict.new()
     self.dictName2Action = Util.Dict.new()
@@ -148,6 +148,30 @@ function FsmMachine:getTransition(name)
 
     local tran, ok = self.dictName2Transition:get(name)
     return tran, ok
+end
+
+--- start
+---@param firstState string @name of first state
+function FsmMachine:start(firstState)
+    assert(firstState, "firstState is nil")
+    assert(firstState == "", "firstState is empty")
+
+    local stat, ok = self:getState(firstState)
+    if ok then
+        self.state = firstState
+        stat:onEnter("")
+    end
+end
+
+--- stop
+function FsmMachine:stop()
+    assert(self.state, "state is nil")
+    assert(self.state == "", "state is empty")
+
+    local stat, ok = self:getState(self.state)
+    if ok then
+        stat:onExit("")
+    end
 end
 
 --- update

@@ -5,7 +5,6 @@
 local Util = require("Assets.YxLibLua.Util.Util")
 local Fsm = require("Assets.YxLibLua.Fsm.Fsm")
 local BT = require("Assets.YxLibLua.BT.BT")
-local Const = require("Assets.YxLibLua.Agent.Const")
 local AgentFsmState = require("Assets.YxLibLua.Agent.AgentFsmState")
 local AgentState = require("Assets.YxLibLua.Agent.AgentState")
 local AgentFsmAction = require("Assets.YxLibLua.Agent.AgentFsmAction")
@@ -27,7 +26,7 @@ class(BaseAgent, "BaseAgent", nil)
 function BaseAgent:_ctor(...)
     local params = {...}
     self.agentId = params[1]
-    self.fsm = Fsm.FsmMachine.new(self.agentId, Const.AGENT_STATE_IDLE)
+    self.fsm = Fsm.FsmMachine.new(self.agentId)
     self.dictName2State = Util.Dict.new()
     self.dictName2FsmActionFunc = Util.Dict.new()
     self.dictId2BNodeActionFunc = Util.Dict.new()
@@ -37,6 +36,17 @@ end
 ---@return number @agent id
 function BaseAgent:getId()
     return self.agentId
+end
+
+--- start
+---@param firstState string @name of first state
+function BaseAgent:start(firstState)
+    self.fsm:start(firstState)
+end
+
+--- stop
+function BaseAgent:stop()
+    self.fsm:stop()
 end
 
 --- update
