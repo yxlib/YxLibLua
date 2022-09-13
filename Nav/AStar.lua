@@ -20,7 +20,7 @@ class(AStar, "AStar", BasePathFinder)
 
 --- ctor method
 function AStar:_ctor(...)
-    super(self, self)
+    super(self, BasePathFinder, self)
 end
 
 --- create first node

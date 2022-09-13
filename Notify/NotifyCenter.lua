@@ -26,7 +26,7 @@ function NotifyCenter:addDispatcher(dispatcher)
 
     local msgName = dispatcher:getMsgName()
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
 
     self.dictName2Dispatcher:set(msgName, dispatcher)
 end
@@ -35,7 +35,7 @@ end
 ---@param msgName string
 function NotifyCenter:removeDispatcher(msgName)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
 
     self.dictName2Dispatcher:delete(msgName)
 end
@@ -46,7 +46,7 @@ end
 ---@return boolean
 function NotifyCenter:getDispatcher(msgName)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
 
     local dispatcher, ok = self.dictName2Dispatcher:get(msgName)
     return dispatcher, ok
@@ -58,7 +58,7 @@ end
 ---@param cb function @(msg: Msg) => void
 function NotifyCenter:addObserver(msgName, obj, cb)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
     assert(obj, "object is nil")
     assert(cb, "callback is nil")
 
@@ -77,7 +77,7 @@ end
 ---@param cb function @(msg: Msg) => void
 function NotifyCenter:addOnceObserver(msgName, obj, cb)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
     assert(obj, "object is nil")
     assert(cb, "callback is nil")
 
@@ -96,7 +96,7 @@ end
 ---@param cb function @(msg: Msg) => void
 function NotifyCenter:removeObserver(msgName, obj, cb)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
     assert(obj, "object is nil")
     assert(cb, "callback is nil")
 
@@ -111,7 +111,7 @@ end
 ---@param obj any
 function NotifyCenter:removeObservers(msgName, obj)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
     assert(obj, "object is nil")
 
     local dispatcher, ok = self.dictName2Dispatcher:get(msgName)
@@ -140,7 +140,7 @@ end
 ---@param msgName string
 function NotifyCenter:notify(msgName, ...)
     assert(msgName, "msgName is nil")
-    assert(msgName == "", "msgName is empty")
+    assert(msgName ~= "", "msgName is empty")
 
     local params = {...}
     local dispatcher, ok = self.dictName2Dispatcher:get(msgName)

@@ -55,6 +55,18 @@ function BaseAgent:update(dt)
     self.fsm:update(dt)
 end
 
+--- trigger event
+---@param evt string @event
+---@param params any[] @event params
+function BaseAgent:trigger(evt, ...)
+    self.fsm:trigger(evt, ...)
+end
+
+--- pop state
+function BaseAgent:popState()
+    self.fsm:popState()
+end
+
 --- add state
 ---@param name string @state name
 ---@param bt BehaviorTree @behavior tree
@@ -63,7 +75,7 @@ end
 ---@param exitFunc function @function(toState string)
 function BaseAgent:addState(name, bt, enterFunc, updateFunc, exitFunc)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     local stat = AgentFsmState.new(name, self)
     self.fsm:addState(name, stat)
@@ -76,7 +88,7 @@ end
 ---@param name string @state name
 function BaseAgent:removeState(name)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     self.fsm:removeState(name)
 
@@ -91,7 +103,7 @@ end
 ---@param actionFunc function @function(evt string, ...)
 function BaseAgent:addAction(name, actionFunc)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     local act = AgentFsmAction.new(name, self)
     self.fsm:addAction(name, act)
@@ -102,7 +114,7 @@ end
 ---@param name string @action name
 function BaseAgent:removeAction(name)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     self.fsm:removeAction(name)
 
@@ -113,22 +125,19 @@ function BaseAgent:removeAction(name)
 end
 
 --- add transition
----@param name string @transition name
----@param tran FsmTransition @transition
-function BaseAgent:addTransition(name, tran)
-    assert(name, "name is nil")
-    assert(name == "", "name is empty")
-
-    self.fsm:addTransition(name, tran)
+---@param from string @from state
+---@param event string @event
+---@param to string @to state
+---@param action string @action
+function BaseAgent:addTransition(from, event, to, action)
+    self.fsm:addTransition(from, event, to, action)
 end
 
 --- remove transition
----@param name string @transition name
-function BaseAgent:removeTransition(name)
-    assert(name, "name is nil")
-    assert(name == "", "name is empty")
-
-    self.fsm:removeTransition(name)
+---@param from string @from state
+---@param event string @event
+function BaseAgent:removeTransition(from, event)
+    self.fsm:removeTransition(from, event)
 end
 
 --- add behavior tree action
@@ -136,7 +145,7 @@ end
 ---@param handleFunc function @function(node IBehaviorNode, ...)
 function BaseAgent:addBNodeActionHandleFunc(actionId, handleFunc)
     local existFunc, ok = self.dictId2BNodeActionFunc:get(actionId)
-    assert(ok, "handle func exist")
+    assert(not ok, "handle func exist")
     self.dictId2BNodeActionFunc:set(actionId, handleFunc)
 end
 
@@ -148,7 +157,7 @@ end
 ---@param fromState string @from state
 function BaseAgent:onEnterFsmState(state, fromState)
     assert(state, "state is nil")
-    assert(state == "", "state is empty")
+    assert(state ~= "", "state is empty")
 
     local agentState, ok = self.dictName2State:get(state)
     if ok and agentState.enterFunc ~= nil then
@@ -161,7 +170,7 @@ end
 ---@param dt number @delta time
 function BaseAgent:onUpdateFsmState(state, dt)
     assert(state, "state is nil")
-    assert(state == "", "state is empty")
+    assert(state ~= "", "state is empty")
 
     local agentState, ok = self.dictName2State:get(state)
     if ok then
@@ -178,7 +187,7 @@ end
 ---@param toState string @to state
 function BaseAgent:onExitFsmState(state, toState)
     assert(state, "state is nil")
-    assert(state == "", "state is empty")
+    assert(state ~= "", "state is empty")
 
     local agentState, ok = self.dictName2State:get(state)
     if ok and agentState.exitFunc ~= nil then
@@ -193,7 +202,7 @@ end
 ---@return boolean @is success
 function BaseAgent:onFsmAction(action, evt, ...)
     assert(action, "action is nil")
-    assert(action == "", "action is empty")
+    assert(action ~= "", "action is empty")
 
     local actionFunc, ok = self.dictName2FsmActionFunc:get(action)
     if ok then

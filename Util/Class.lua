@@ -92,7 +92,10 @@ function class(t, className, super)
         -- invokeCtor(o, t, ...)
 
         setmetatable(o, t) -- bind class
-        o:_ctor(...)
+        if o._ctor ~= nil then
+            o:_ctor(...)
+        end
+        
         return o
     end
 
@@ -111,11 +114,11 @@ function class(t, className, super)
     return t
 end
 
-function super(o, ...)
-    assert(o._super, "super class is nil")
+function super(o, superClass, ...)
+    assert(superClass, "super class is nil")
 
-    if o._super._ctor ~= nil then
-        o._super._ctor(o, ...)
+    if superClass._ctor ~= nil then
+        superClass._ctor(o, ...)
     end
 end
 

@@ -13,7 +13,7 @@ local IFsmState = require("Assets.YxLibLua.Fsm.IFsmState")
 ---@field oldStates Array @old states
 ---@field dictName2State Dict @bind name and state
 ---@field dictName2Action Dict @bind name and action
----@field dictName2transition Dict @bind name and transition
+---@field transitions Array @transitions
 local FsmMachine = {
     ---@param id number @id
     ---@return FsmMachine @FsmMachine object
@@ -30,7 +30,7 @@ function FsmMachine:_ctor(...)
     self.oldStates = Util.Array.new()
     self.dictName2State = Util.Dict.new()
     self.dictName2Action = Util.Dict.new()
-    self.dictName2Transition = Util.Dict.new()
+    self.transitions = Util.Array.new()
 end
 
 --- get id
@@ -50,7 +50,7 @@ end
 ---@param stat IFsmState @state
 function FsmMachine:addState(name, stat)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
     assert(stat, "stat is nil")
 
     self.dictName2State:set(name, stat)
@@ -60,7 +60,7 @@ end
 ---@param name string @name
 function FsmMachine:removeState(name)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     local stat, ok = self.dictName2State:get(name)
     if ok then
@@ -74,7 +74,7 @@ end
 ---@return boolean @ok
 function FsmMachine:getState(name)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     local stat, ok = self.dictName2State:get(name)
     return stat, ok
@@ -85,7 +85,7 @@ end
 ---@param act IFsmAction @action
 function FsmMachine:addAction(name, act)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
     assert(act, "act is nil")
 
     self.dictName2Action:set(name, act)
@@ -95,7 +95,7 @@ end
 ---@param name string @name
 function FsmMachine:removeAction(name)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     local act, ok = self.dictName2Action:get(name)
     if ok then
@@ -109,52 +109,75 @@ end
 ---@return boolean @ok
 function FsmMachine:getAction(name)
     assert(name, "name is nil")
-    assert(name == "", "name is empty")
+    assert(name ~= "", "name is empty")
 
     local act, ok = self.dictName2Action:get(name)
     return act, ok
 end
 
 --- add transition
----@param name string @name
----@param tran FsmTransition @transition
-function FsmMachine:addTransition(name, tran)
-    assert(name, "name is nil")
-    assert(name == "", "name is empty")
-    assert(act, "act is nil")
+---@param from string @from state
+---@param event string @event
+---@param to string @to state
+---@param action string @action
+function FsmMachine:addTransition(from, event, to, action)
+    assert(from, "from is nil")
+    assert(from ~= "", "from is empty")
 
-    self.dictName2Transition:set(name, tran)
+    assert(event, "event is nil")
+    assert(event ~= "", "event is empty")
+
+    assert(to, "event is nil")
+    assert(to ~= "", "event is empty")
+
+    local tran = FsmTransition.new(from, event, to, action)
+    self.transitions:pushBack(tran)
 end
 
 --- remove transition
----@param name string @name
-function FsmMachine:removeTransition(name)
-    assert(name, "name is nil")
-    assert(name == "", "name is empty")
+---@param from string @from state
+---@param event string @event
+function FsmMachine:removeTransition(from, event)
+    assert(from, "from is nil")
+    assert(from ~= "", "from is empty")
 
-    local tran, ok = self.dictName2Transition:get(name)
-    if ok then
-        self.dictName2Transition:delete(name)
+    assert(event, "event is nil")
+    assert(event ~= "", "event is empty")
+
+    for i, tran in ipairs(self.transitions) do
+        if tran.from == from and tran.event == event then
+            self.transitions:erase(i)
+            break
+        end
     end
 end
 
 --- get transition
----@param name string @name
+---@param from string @from state
+---@param event string @event
 ---@return FsmTransition @fsm transition
 ---@return boolean @ok
-function FsmMachine:getTransition(name)
-    assert(name, "name is nil")
-    assert(name == "", "name is empty")
+function FsmMachine:getTransition(from, event)
+    assert(from, "from is nil")
+    assert(from ~= "", "from is empty")
 
-    local tran, ok = self.dictName2Transition:get(name)
-    return tran, ok
+    assert(event, "event is nil")
+    assert(event ~= "", "event is empty")
+
+    for i, tran in ipairs(self.transitions) do
+        if tran.from == from and tran.event == event then
+            return tran, true
+        end
+    end
+
+    return nil, false
 end
 
 --- start
 ---@param firstState string @name of first state
 function FsmMachine:start(firstState)
     assert(firstState, "firstState is nil")
-    assert(firstState == "", "firstState is empty")
+    assert(firstState ~= "", "firstState is empty")
 
     local stat, ok = self:getState(firstState)
     if ok then
@@ -166,7 +189,7 @@ end
 --- stop
 function FsmMachine:stop()
     assert(self.state, "state is nil")
-    assert(self.state == "", "state is empty")
+    assert(self.state ~= "", "state is empty")
 
     local stat, ok = self:getState(self.state)
     if ok then
@@ -178,7 +201,7 @@ end
 ---@param dt number @delta time
 function FsmMachine:update(dt)
     assert(self.state, "state is nil")
-    assert(self.state == "", "state is empty")
+    assert(self.state ~= "", "state is empty")
 
     local stat, ok = self:getState(self.state)
     if ok then
@@ -190,18 +213,13 @@ end
 ---@param evt string @event
 ---@param params any[] @event params
 function FsmMachine:trigger(evt, ...)
-    assert(evt, "state is nil")
+    assert(evt, "evt is nil")
+    assert(evt ~= "", "event is empty")
     assert(self.state, "state is nil")
-    assert(self.state == "", "state is empty")
+    assert(self.state ~= "", "state is empty")
 
-    local triggerTran = nil
-    for name, tran in pairs(self.dictName2Transition) do
-        if tran.from == self.state and tran.event == evt then
-            triggerTran = tran
-        end
-    end
-
-    if triggerTran == nil then
+    local triggerTran, ok = self:getTransition(self.state, evt)
+    if not ok then
         return
     end
 

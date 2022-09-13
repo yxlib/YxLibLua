@@ -18,7 +18,7 @@ class(SequenceNode, "SequenceNode", ControlNode)
 --- ctor method
 function SequenceNode:_ctor(...)
     local params = {...}
-    super(self, params[1], Const.BNODE_TYPE_SEQUENCE)
+    super(self, ControlNode, params[1], Const.BNODE_TYPE_SEQUENCE)
 
     -- self.nodeType = Const.BNODE_TYPE_SEQUENCE
 end

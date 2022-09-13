@@ -18,7 +18,7 @@ class(SelectNode, "SelectNode", ControlNode)
 --- ctor method
 function SelectNode:_ctor(...)
     local params = {...}
-    super(self, params[1], Const.BNODE_TYPE_SELECT)
+    super(self, ControlNode, params[1], Const.BNODE_TYPE_SELECT)
 
     -- self.nodeType = Const.BNODE_TYPE_SELECT
 end

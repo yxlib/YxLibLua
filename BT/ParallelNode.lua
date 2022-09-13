@@ -18,7 +18,7 @@ class(ParallelNode, "ParallelNode", ControlNode)
 --- ctor method
 function ParallelNode:_ctor(...)
     local params = {...}
-    super(self, params[1], Const.BNODE_TYPE_PARALLEL)
+    super(self, ControlNode, params[1], Const.BNODE_TYPE_PARALLEL)
 
     -- self.nodeType = Const.BNODE_TYPE_PARALLEL
 end

@@ -29,7 +29,7 @@ class(AgentBNode, "AgentBNode", BT.BaseBehaviorNode)
 --- ctor method
 function AgentBNode:_ctor(...)
     local params = {...}
-    super(self, params[1], params[2], params[3])
+    super(self, BT.BaseBehaviorNode, params[1], params[2], params[3])
 
     self.listener = params[4]
     self.params = params[5]

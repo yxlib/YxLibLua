@@ -26,7 +26,7 @@ class(AStarNode, "AStarNode", BasePathNode)
 --- ctor method
 function AStarNode:_ctor(...)
     local params = {...}
-    super(self, params[1], params[2], params[3], params[4], params[5])
+    super(self, BasePathNode, params[1], params[2], params[3], params[4], params[5])
 end
 
 return AStarNode

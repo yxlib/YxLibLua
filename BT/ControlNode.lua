@@ -21,7 +21,7 @@ class(ControlNode, "ControlNode", BaseBehaviorNode)
 --- ctor method
 function ControlNode:_ctor(...)
     local params = {...}
-    super(self, params[1])
+    super(self, BaseBehaviorNode, params[1])
     self.nodeType = params[2]
 
     self.subNodes = Util.Array.new()
