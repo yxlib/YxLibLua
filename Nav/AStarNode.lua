@@ -2,9 +2,9 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Grid = require("Assets.YxLibLua.Nav.Grid")
-local BasePathNode = require("Assets.YxLibLua.Nav.BasePathNode")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Grid = require("LuaScripts.YxLibLua.Nav.Grid")
+local BasePathNode = require("LuaScripts.YxLibLua.Nav.BasePathNode")
 
 ---@class AStarNode : BasePathNode @AStarNode class
 ---@field parent IPathNode @parent node

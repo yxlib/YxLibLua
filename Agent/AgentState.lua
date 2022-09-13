@@ -2,8 +2,8 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local BT = require("Assets.YxLibLua.BT.BT")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local BT = require("LuaScripts.YxLibLua.BT.BT")
 
 ---@class AgentState @AgentState class
 ---@field bt BehaviorTree @behavior tree

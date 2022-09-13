@@ -4,14 +4,14 @@
 
 local Agent = {}
 
-Agent.AgentBNode = require("Assets.YxLibLua.Agent.AgentBNode")
-Agent.AgentFsmAction = require("Assets.YxLibLua.Agent.AgentFsmAction")
-Agent.AgentFsmState = require("Assets.YxLibLua.Agent.AgentFsmState")
-Agent.AgentState = require("Assets.YxLibLua.Agent.AgentState")
-Agent.BaseAgent = require("Assets.YxLibLua.Agent.BaseAgent")
-Agent.IAgent = require("Assets.YxLibLua.Agent.IAgent")
-Agent.IAgentBNodeListener = require("Assets.YxLibLua.Agent.IAgentBNodeListener")
-Agent.IAgentFsmActionListener = require("Assets.YxLibLua.Agent.IAgentFsmActionListener")
-Agent.IAgentFsmStateListener = require("Assets.YxLibLua.Agent.IAgentFsmStateListener")
+Agent.AgentBNode = require("LuaScripts.YxLibLua.Agent.AgentBNode")
+Agent.AgentFsmAction = require("LuaScripts.YxLibLua.Agent.AgentFsmAction")
+Agent.AgentFsmState = require("LuaScripts.YxLibLua.Agent.AgentFsmState")
+Agent.AgentState = require("LuaScripts.YxLibLua.Agent.AgentState")
+Agent.BaseAgent = require("LuaScripts.YxLibLua.Agent.BaseAgent")
+Agent.IAgent = require("LuaScripts.YxLibLua.Agent.IAgent")
+Agent.IAgentBNodeListener = require("LuaScripts.YxLibLua.Agent.IAgentBNodeListener")
+Agent.IAgentFsmActionListener = require("LuaScripts.YxLibLua.Agent.IAgentFsmActionListener")
+Agent.IAgentFsmStateListener = require("LuaScripts.YxLibLua.Agent.IAgentFsmStateListener")
 
 return Agent

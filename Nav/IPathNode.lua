@@ -2,10 +2,10 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Grid = require("Assets.YxLibLua.Nav.Grid")
-local Vector = require("Assets.YxLibLua.Nav.Vector")
-local INavigationMap = require("Assets.YxLibLua.Nav.INavigationMap")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Grid = require("LuaScripts.YxLibLua.Nav.Grid")
+local Vector = require("LuaScripts.YxLibLua.Nav.Vector")
+local INavigationMap = require("LuaScripts.YxLibLua.Nav.INavigationMap")
 
 ---@class IPathNode @IPathNode interface
 local IPathNode = interface("IPathNode")

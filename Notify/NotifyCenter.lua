@@ -2,9 +2,9 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Msg = require("Assets.YxLibLua.Notify.Msg")
-local Dispatcher = require("Assets.YxLibLua.Notify.Dispatcher")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Msg = require("LuaScripts.YxLibLua.Notify.Msg")
+local Dispatcher = require("LuaScripts.YxLibLua.Notify.Dispatcher")
 
 ---@class NotifyCenter @NotifyCenter class
 ---@field dictName2Dispatcher Dict

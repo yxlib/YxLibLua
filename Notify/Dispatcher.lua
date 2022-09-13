@@ -2,9 +2,9 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Observer = require("Assets.YxLibLua.Notify.Observer")
-local Msg = require("Assets.YxLibLua.Notify.Msg")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Observer = require("LuaScripts.YxLibLua.Notify.Observer")
+local Msg = require("LuaScripts.YxLibLua.Notify.Msg")
 
 ---@class Dispatcher @Dispatcher class
 ---@field msgName string

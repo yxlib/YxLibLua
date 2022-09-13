@@ -2,7 +2,7 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
 
 ---@class IAgentFsmStateListener @IAgentFsmStateListener interface
 local IAgentFsmStateListener = interface("IAgentFsmStateListener")

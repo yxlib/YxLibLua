@@ -2,9 +2,9 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local BT = require("Assets.YxLibLua.BT.BT")
-local IAgentBNodeListener = require("Assets.YxLibLua.Agent.IAgentBNodeListener")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local BT = require("LuaScripts.YxLibLua.BT.BT")
+local IAgentBNodeListener = require("LuaScripts.YxLibLua.Agent.IAgentBNodeListener")
 
 ---@class AgentBNode : BaseBehaviorNode @AgentBNode class
 ---@field nodeId number @node id

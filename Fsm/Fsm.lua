@@ -3,9 +3,9 @@
 -- license that can be found in the LICENSE file.
 
 local Fsm = {}
-Fsm.FsmMachine = require("Assets.YxLibLua.Fsm.FsmMachine")
-Fsm.FsmTransition = require("Assets.YxLibLua.Fsm.FsmTransition")
-Fsm.IFsmAction = require("Assets.YxLibLua.Fsm.IFsmAction")
-Fsm.IFsmState = require("Assets.YxLibLua.Fsm.IFsmState")
+Fsm.FsmMachine = require("LuaScripts.YxLibLua.Fsm.FsmMachine")
+Fsm.FsmTransition = require("LuaScripts.YxLibLua.Fsm.FsmTransition")
+Fsm.IFsmAction = require("LuaScripts.YxLibLua.Fsm.IFsmAction")
+Fsm.IFsmState = require("LuaScripts.YxLibLua.Fsm.IFsmState")
 
 return Fsm

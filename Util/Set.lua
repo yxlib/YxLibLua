@@ -2,8 +2,8 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-require("Assets.YxLibLua.Util.Class")
-local Array = require("Assets.YxLibLua.Util.Array")
+require("LuaScripts.YxLibLua.Util.Class")
+local Array = require("LuaScripts.YxLibLua.Util.Array")
 
 ---@class Set @Set class
 local Set = {

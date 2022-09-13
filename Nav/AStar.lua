@@ -2,10 +2,10 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Grid = require("Assets.YxLibLua.Nav.Grid")
-local BasePathFinder = require("Assets.YxLibLua.Nav.BasePathFinder")
-local AStarNode = require("Assets.YxLibLua.Nav.AStarNode")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Grid = require("LuaScripts.YxLibLua.Nav.Grid")
+local BasePathFinder = require("LuaScripts.YxLibLua.Nav.BasePathFinder")
+local AStarNode = require("LuaScripts.YxLibLua.Nav.AStarNode")
 
 ---@class AStar : BasePathFinder @AStar class
 ---@field impl IPathFinderImpl @implement

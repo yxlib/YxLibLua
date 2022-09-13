@@ -4,15 +4,15 @@
 
 local Nav = {}
 
-Nav.AStar = require("Assets.YxLibLua.Nav.AStar")
-Nav.AStarNode = require("Assets.YxLibLua.Nav.AStarNode")
-Nav.BasePathFinder = require("Assets.YxLibLua.Nav.BasePathFinder")
-Nav.BasePathNode = require("Assets.YxLibLua.Nav.BasePathNode")
-Nav.Grid = require("Assets.YxLibLua.Nav.Grid")
-Nav.INavigationMap = require("Assets.YxLibLua.Nav.INavigationMap")
-Nav.IPathFinder = require("Assets.YxLibLua.Nav.IPathFinder")
-Nav.IPathFinderImpl = require("Assets.YxLibLua.Nav.IPathFinderImpl")
-Nav.IPathNode = require("Assets.YxLibLua.Nav.IPathNode")
-Nav.Vector = require("Assets.YxLibLua.Nav.Vector")
+Nav.AStar = require("LuaScripts.YxLibLua.Nav.AStar")
+Nav.AStarNode = require("LuaScripts.YxLibLua.Nav.AStarNode")
+Nav.BasePathFinder = require("LuaScripts.YxLibLua.Nav.BasePathFinder")
+Nav.BasePathNode = require("LuaScripts.YxLibLua.Nav.BasePathNode")
+Nav.Grid = require("LuaScripts.YxLibLua.Nav.Grid")
+Nav.INavigationMap = require("LuaScripts.YxLibLua.Nav.INavigationMap")
+Nav.IPathFinder = require("LuaScripts.YxLibLua.Nav.IPathFinder")
+Nav.IPathFinderImpl = require("LuaScripts.YxLibLua.Nav.IPathFinderImpl")
+Nav.IPathNode = require("LuaScripts.YxLibLua.Nav.IPathNode")
+Nav.Vector = require("LuaScripts.YxLibLua.Nav.Vector")
 
 return Nav

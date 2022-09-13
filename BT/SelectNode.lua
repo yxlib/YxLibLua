@@ -2,9 +2,9 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Const = require("Assets.YxLibLua.BT.Const")
-local ControlNode = require("Assets.YxLibLua.BT.ControlNode")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Const = require("LuaScripts.YxLibLua.BT.Const")
+local ControlNode = require("LuaScripts.YxLibLua.BT.ControlNode")
 
 ---@class SelectNode : ControlNode @SelectNode class
 ---@field nodeId number @node id

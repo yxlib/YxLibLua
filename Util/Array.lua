@@ -2,7 +2,7 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-require("Assets.YxLibLua.Util.Class")
+require("LuaScripts.YxLibLua.Util.Class")
 
 ---@class Array @Array class
 local Array = {

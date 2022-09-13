@@ -2,10 +2,10 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local FsmTransition = require("Assets.YxLibLua.Fsm.FsmTransition")
-local IFsmAction = require("Assets.YxLibLua.Fsm.IFsmAction")
-local IFsmState = require("Assets.YxLibLua.Fsm.IFsmState")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local FsmTransition = require("LuaScripts.YxLibLua.Fsm.FsmTransition")
+local IFsmAction = require("LuaScripts.YxLibLua.Fsm.IFsmAction")
+local IFsmState = require("LuaScripts.YxLibLua.Fsm.IFsmState")
 
 ---@class FsmMachine @FsmMachine class
 ---@field id number @id

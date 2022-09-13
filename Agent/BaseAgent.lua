@@ -2,12 +2,12 @@
 -- Use of this source code is governed by a BSD-style
 -- license that can be found in the LICENSE file.
 
-local Util = require("Assets.YxLibLua.Util.Util")
-local Fsm = require("Assets.YxLibLua.Fsm.Fsm")
-local BT = require("Assets.YxLibLua.BT.BT")
-local AgentFsmState = require("Assets.YxLibLua.Agent.AgentFsmState")
-local AgentState = require("Assets.YxLibLua.Agent.AgentState")
-local AgentFsmAction = require("Assets.YxLibLua.Agent.AgentFsmAction")
+local Util = require("LuaScripts.YxLibLua.Util.Util")
+local Fsm = require("LuaScripts.YxLibLua.Fsm.Fsm")
+local BT = require("LuaScripts.YxLibLua.BT.BT")
+local AgentFsmState = require("LuaScripts.YxLibLua.Agent.AgentFsmState")
+local AgentState = require("LuaScripts.YxLibLua.Agent.AgentState")
+local AgentFsmAction = require("LuaScripts.YxLibLua.Agent.AgentFsmAction")
 
 ---@class BaseAgent @BaseAgent class
 ---@field agentId number @agent id

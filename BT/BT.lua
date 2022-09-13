@@ -4,13 +4,13 @@
 
 local BT = {}
 
-BT.BaseBehaviorNode = require("Assets.YxLibLua.BT.BaseBehaviorNode")
-BT.BehaviorTree = require("Assets.YxLibLua.BT.BehaviorTree")
-BT.Const = require("Assets.YxLibLua.BT.Const")
-BT.ControlNode = require("Assets.YxLibLua.BT.ControlNode")
-BT.IBehaviorNode = require("Assets.YxLibLua.BT.IBehaviorNode")
-BT.ParallelNode = require("Assets.YxLibLua.BT.ParallelNode")
-BT.SelectNode = require("Assets.YxLibLua.BT.SelectNode")
-BT.SequenceNode = require("Assets.YxLibLua.BT.SequenceNode")
+BT.BaseBehaviorNode = require("LuaScripts.YxLibLua.BT.BaseBehaviorNode")
+BT.BehaviorTree = require("LuaScripts.YxLibLua.BT.BehaviorTree")
+BT.Const = require("LuaScripts.YxLibLua.BT.Const")
+BT.ControlNode = require("LuaScripts.YxLibLua.BT.ControlNode")
+BT.IBehaviorNode = require("LuaScripts.YxLibLua.BT.IBehaviorNode")
+BT.ParallelNode = require("LuaScripts.YxLibLua.BT.ParallelNode")
+BT.SelectNode = require("LuaScripts.YxLibLua.BT.SelectNode")
+BT.SequenceNode = require("LuaScripts.YxLibLua.BT.SequenceNode")
 
 return BT
