@@ -233,11 +233,13 @@ function FsmMachine:trigger(evt, ...)
         return
     end
 
-    local act, ok = self:getAction(triggerTran.action)
-    if ok then
-        local succ = act:doAction(evt, ...)
-        if not succ then
-            return
+    if triggerTran.action ~= nil and triggerTran.action ~= "" then
+        local act, ok = self:getAction(triggerTran.action)
+        if ok then
+            local succ = act:doAction(evt, ...)
+            if not succ then
+                return
+            end
         end
     end
 
