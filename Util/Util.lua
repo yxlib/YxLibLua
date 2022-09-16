@@ -9,5 +9,6 @@ Util.Array = require("LuaScripts.YxLibLua.Util.Array")
 Util.Set = require("LuaScripts.YxLibLua.Util.Set")
 Util.Dict = require("LuaScripts.YxLibLua.Util.Dict")
 Util.Queue = require("LuaScripts.YxLibLua.Util.Queue")
+Util.Logger = require("LuaScripts.YxLibLua.Util.Logger")
 
 return Util

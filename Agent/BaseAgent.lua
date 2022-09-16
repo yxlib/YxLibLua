@@ -67,6 +67,12 @@ function BaseAgent:popState()
     self.fsm:popState()
 end
 
+--- get current state
+---@return string @fsm state
+function BaseAgent:getCurState()
+    return self.fsm:getCurState()
+end
+
 --- add state
 ---@param name string @state name
 ---@param bt BehaviorTree @behavior tree
