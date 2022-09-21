@@ -51,7 +51,7 @@ function Dispatcher:removeObserver(obj, cb)
     assert(cb, "callback is nil")
 
     for i = self.observers:size(), 1, -1 do
-        local observer = self.observers[i]
+        local observer = self.observers:at(i)
         if obj == observer.object and cb == observer.callback then
             self.observers:erase(i)
             break
@@ -65,7 +65,7 @@ function Dispatcher:removeObservers(obj)
     assert(obj, "object is nil")
 
     for i = self.observers:size(), 1, -1 do
-        local observer = self.observers[i]
+        local observer = self.observers:at(i)
         if obj == observer.object then
             self.observers:erase(i)
         end
@@ -78,9 +78,9 @@ function Dispatcher:notify(params)
     local msg = Msg.new(self.msgName, params)
     local observers = self.observers:clone()
 
-    for i, observer in ipairs(observers) do
+    observers:foreach(function(i, observer)
         if not self:_isObserverExist(observer.object, observer.callback) then
-            goto continue
+            return true
         end
 
         observer.callback(observer.object, msg)
@@ -88,8 +88,21 @@ function Dispatcher:notify(params)
             self:removeObserver(observer.object, observer.callback)
         end
 
-        ::continue::
-    end
+        return true
+    end)
+
+    -- for i, observer in ipairs(observers) do
+    --     if not self:_isObserverExist(observer.object, observer.callback) then
+    --         goto continue
+    --     end
+
+    --     observer.callback(observer.object, msg)
+    --     if observer.once then
+    --         self:removeObserver(observer.object, observer.callback)
+    --     end
+
+    --     ::continue::
+    -- end
 end
 
 --- add observer implement
@@ -114,7 +127,7 @@ end
 ---@return boolean
 function Dispatcher:_isObserverExist(obj, cb)
     for i = 1, self.observers:size() do
-        local observer = self.observers[i]
+        local observer = self.observers:at(i)
         if obj == observer.object and cb == observer.callback then
             return true
         end

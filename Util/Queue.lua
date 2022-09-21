@@ -20,6 +20,7 @@ class(Queue, "Queue", nil)
 function Queue:_ctor(...)
     local params = {...}
     self.maxSize = params[1]
+    self.internal = {}
     self.queSize = 0
     self.first = 1
     self.last = 1
@@ -32,7 +33,7 @@ function Queue:push(value)
     assert(self.queSize < self.maxSize, "queue is full")
 
     local last = self.last
-    self[last] = value
+    self.internal[last] = value
 
     last = last + 1
     if last > self.maxSize then
@@ -49,8 +50,8 @@ function Queue:pop()
     assert(self.queSize > 0, "Queue is empty")
 
     local first = self.first
-    local value = self[first]
-    self[first] = nil
+    local value = self.internal[first]
+    self.internal[first] = nil
 
     first = first + 1
     if first > self.maxSize then

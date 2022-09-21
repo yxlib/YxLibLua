@@ -106,14 +106,28 @@ end
 ---@return IPathNode @node
 ---@return boolean @is success
 function BasePathFinder:getOpenNode(col, row)
-    for i, node in ipairs(self.openList) do
+    local existNode = nil
+    local bSucc = false
+
+    self.openList:foreach(function(i, node)
         local grid = node:getGrid()
         if grid:isSameGrid2(col, row) then
-            return node, true
+            existNode = node
+            bSucc = true
+            return false
         end
-    end
 
-    return nil, false
+        return true
+    end)
+
+    -- for i, node in ipairs(self.openList) do
+    --     local grid = node:getGrid()
+    --     if grid:isSameGrid2(col, row) then
+    --         return node, true
+    --     end
+    -- end
+
+    return existNode, bSucc
 end
 
 --- add node to close list
@@ -128,14 +142,28 @@ end
 ---@return IPathNode @node
 ---@return boolean @is success
 function BasePathFinder:getCloseNode(col, row)
-    for i, node in ipairs(self.closeList) do
+    local existNode = nil
+    local bSucc = false
+
+    self.closeList:foreach(function(i, node)
         local grid = node:getGrid()
         if grid:isSameGrid2(col, row) then
-            return node, true
+            existNode = node
+            bSucc = true
+            return false
         end
-    end
 
-    return nil, false
+        return true
+    end)
+
+    -- for i, node in ipairs(self.closeList) do
+    --     local grid = node:getGrid()
+    --     if grid:isSameGrid2(col, row) then
+    --         return node, true
+    --     end
+    -- end
+
+    return existNode, bSucc
 end
 
 --- update exist list
@@ -173,20 +201,32 @@ function BasePathFinder:popMinValueNode(navMap, dstGrid)
     local minF = math.maxinteger
     local minIdx = -1
     local baseGValue = navMap:getMinGValue()
-    for i, node in ipairs(self.openList) do
+    
+    self.openList:foreach(function(i, node)
         local h = self:calH(node, dstGrid, baseGValue)
         local f = node:getMinGValue() + h
         if minF > f then
             minF = f
             minIdx = i
         end
-    end
+
+        return true
+    end)
+
+    -- for i, node in ipairs(self.openList) do
+    --     local h = self:calH(node, dstGrid, baseGValue)
+    --     local f = node:getMinGValue() + h
+    --     if minF > f then
+    --         minF = f
+    --         minIdx = i
+    --     end
+    -- end
 
     if minIdx == -1 then
         return nil, false
     end
 
-    local minNode = self.openList[minIdx]
+    local minNode = self.openList:at(minIdx)
     self.openList:erase(minIdx)
     return minNode, true
 end
@@ -224,8 +264,8 @@ function BasePathFinder:getFullPath()
     end
 
     local fullPathLen = #fullPath
-    local integral, fractional = math.modf(fullPathLen / 2)
-    for i = 1, integral, 1 do
+    local step = math.floor(fullPathLen / 2)
+    for i = 1, step, 1 do
         local j = fullPathLen - i + 1
         local tmp = fullPath[i]
         fullPath[i] = fullPath[j]

@@ -11,13 +11,18 @@ local Dict = {
 }
 class(Dict, "Dict", nil)
 
+--- ctor method
+function Dict:_ctor(...)
+    self.internal = {}
+end
+
 --- set
 ---@param k any
 ---@param v any
 function Dict:set(k, v)
     assert(k ~= nil, "key is nil")
 
-    self[k] = v
+    self.internal[k] = v
 end
 
 --- get
@@ -27,14 +32,14 @@ end
 function Dict:get(k)
     assert(k ~= nil, "key is nil")
 
-    return self[k], self[k] ~= nil
+    return self.internal[k], self.internal[k] ~= nil
 end
 
 --- hasKey
 ---@param k any
 ---@return boolean @ok
 function Dict:hasKey(k)
-    return self[k] ~= nil
+    return self.internal[k] ~= nil
 end
 
 --- delete
@@ -42,14 +47,14 @@ end
 function Dict:delete(k)
     assert(k ~= nil, "key is nil")
 
-    self[k] = nil
+    self.internal[k] = nil
 end
 
 --- get the size of the dictionary
 ---@return number
 function Dict:size()
     local cnt = 0
-    for k, v in pairs(self) do
+    for k, v in pairs(self.internal) do
         if v then
             cnt = cnt + 1
         end
@@ -61,9 +66,9 @@ end
 function Dict:foreach(callback)
     assert(callback, "callback is nil")
 
-    for k, v in pairs(self) do
-        local bSucc = callback(k, v)
-        if not bSucc then
+    for k, v in pairs(self.internal) do
+        local bContinue = callback(k, v)
+        if not bContinue then
             break
         end
     end
@@ -73,7 +78,7 @@ end
 ---@return table @ key array
 function Dict:allKeys()
     local keys = {}
-    for k, v in pairs(self) do
+    for k, v in pairs(self.internal) do
         table.insert(keys, k)
     end
 

@@ -34,11 +34,11 @@ end
 ---@param grid2 Grid @grid to compare
 ---@return boolean @is same grid
 function Grid:isSameGrid(grid2)
-    if self.col ~ grid2.col then
+    if self.col ~= grid2.col then
         return false
     end
 
-    if self.row ~ grid2.row then
+    if self.row ~= grid2.row then
         return false
     end
 
@@ -50,11 +50,11 @@ end
 ---@param row number @row
 ---@return boolean @is same grid
 function Grid:isSameGrid2(col, row)
-    if self.col ~ col then
+    if self.col ~= col then
         return false
     end
 
-    if self.row ~ row then
+    if self.row ~= row then
         return false
     end
 

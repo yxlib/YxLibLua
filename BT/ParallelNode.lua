@@ -32,24 +32,43 @@ function ParallelNode:execute()
     self.state = Const.BNODE_STAT_EXECUTING
 
     local bFinish = true
-    for i, child in ipairs(self.subNodes) do
+    self.subNodes:foreach(function(i, child)
         if child:isCompleted() then
-            goto continue
+            return true
         end
 
         child:execute()
         if not child:isCompleted() then
             bFinish = false
-            goto continue
+            return true
         end
 
         if child:getState() == Const.BNODE_STAT_FAIL then
             self.state = Const.BNODE_STAT_FAIL
-            break
+            return false
         end
 
-        ::continue::
-    end
+        return true
+    end)
+
+    -- for i, child in ipairs(self.subNodes) do
+    --     if child:isCompleted() then
+    --         goto continue
+    --     end
+
+    --     child:execute()
+    --     if not child:isCompleted() then
+    --         bFinish = false
+    --         goto continue
+    --     end
+
+    --     if child:getState() == Const.BNODE_STAT_FAIL then
+    --         self.state = Const.BNODE_STAT_FAIL
+    --         break
+    --     end
+
+    --     ::continue::
+    -- end
 
     if bFinish and self.state == Const.BNODE_STAT_EXECUTING then
         self.state = Const.BNODE_STAT_SUCC

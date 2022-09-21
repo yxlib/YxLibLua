@@ -80,12 +80,21 @@ end
 function BasePathNode:removeChild(node)
     assert(node, "node is nil")
 
-    for i, exist in ipairs(self.children) do
+    self.children:foreach(function(i, exist)
         if exist == node then
             self.children:erase(i)
-            return
+            return false
         end
-    end
+
+        return true
+    end)
+
+    -- for i, exist in ipairs(self.children) do
+    --     if exist == node then
+    --         self.children:erase(i)
+    --         return
+    --     end
+    -- end
 end
 
 --- set min G value
@@ -113,7 +122,7 @@ end
 ---@param navMap INavigationMap @navigation map
 ---@param gValueChange number @G value has change
 function BasePathNode:updateChildrenGValue(navMap, gValueChange)
-    for i, child in ipairs(self.children) do
+    self.children:foreach(function(i, child)
         local oldMinGValue = child:getMinGValue()
         local minGValue = oldMinGValue + gValueChange
         if minGValue < 0 then
@@ -121,7 +130,18 @@ function BasePathNode:updateChildrenGValue(navMap, gValueChange)
         end
 
         child:setMinGValue(minGValue, navMap)
-    end
+        return true
+    end)
+
+    -- for i, child in ipairs(self.children) do
+    --     local oldMinGValue = child:getMinGValue()
+    --     local minGValue = oldMinGValue + gValueChange
+    --     if minGValue < 0 then
+    --         minGValue = 0
+    --     end
+
+    --     child:setMinGValue(minGValue, navMap)
+    -- end
 end
 
 return BasePathNode

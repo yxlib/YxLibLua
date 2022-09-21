@@ -3,7 +3,6 @@
 -- license that can be found in the LICENSE file.
 
 require("LuaScripts.YxLibLua.Util.Class")
-local Array = require("LuaScripts.YxLibLua.Util.Array")
 
 ---@class Set @Set class
 local Set = {
@@ -12,41 +11,48 @@ local Set = {
 }
 class(Set, "Set", nil)
 
+--- ctor method
+function Set:_ctor(...)
+    self.internal = {}
+end
+
 --- add an element
 ---@param element any
 function Set:add(element)
-    assert(not self[element], "element is exist")
+    assert(not self.internal[element], "element is exist")
 
-    self[element] = true
+    self.internal[element] = true
 end
 
 --- remove an element
 ---@param element any
 function Set:remove(element)
-    assert(self[element], "element is not exist")
+    assert(self.internal[element], "element is not exist")
 
-    self[element] = false
+    self.internal[element] = false
 end
 
 --- is element exist
 ---@param element any
 ---@return boolean
 function Set:exist(element)
-    return self[element]
+    return self.internal[element]
 end
 
 --- get all elements
----@return Array
+---@return table @elements array
 function Set:elements()
-    local arr = Array.new()
+    local elements = {}
 
-    for k, v in pairs(self) do
+    local idx = 1
+    for k, v in pairs(self.internal) do
         if v then
-            arr:pushBack(k)
+            table.insert(elements, idx, k)
+            idx = idx + 1
         end
     end
 
-    return arr
+    return elements
 end
 
 --- get the size of the set
@@ -54,7 +60,7 @@ end
 function Set:size()
     local cnt = 0
 
-    for k, v in pairs(self) do
+    for k, v in pairs(self.internal) do
         if v then
             cnt = cnt + 1
         end

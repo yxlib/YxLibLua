@@ -125,9 +125,14 @@ end
 function NotifyCenter:removeObserversByTarget(obj)
     assert(obj, "object is nil")
 
-    for msgName, dispatcher in pairs(self.dictName2Dispatcher) do
+    self.dictName2Dispatcher:foreach(function(msgName, dispatcher)
         dispatcher:removeObservers(obj)
-    end
+        return true
+    end)
+
+    -- for msgName, dispatcher in pairs(self.dictName2Dispatcher) do
+    --     dispatcher:removeObservers(obj)
+    -- end
 end
 
 --- remove observers by message

@@ -144,12 +144,21 @@ function FsmMachine:removeTransition(from, event)
     assert(event, "event is nil")
     assert(event ~= "", "event is empty")
 
-    for i, tran in ipairs(self.transitions) do
+    self.transitions:foreach(function(i, tran)
         if tran.from == from and tran.event == event then
             self.transitions:erase(i)
-            break
+            return false
         end
-    end
+
+        return true
+    end)
+
+    -- for i, tran in ipairs(self.transitions) do
+    --     if tran.from == from and tran.event == event then
+    --         self.transitions:erase(i)
+    --         break
+    --     end
+    -- end
 end
 
 --- get transition
@@ -164,13 +173,26 @@ function FsmMachine:getTransition(from, event)
     assert(event, "event is nil")
     assert(event ~= "", "event is empty")
 
-    for i, tran in ipairs(self.transitions) do
-        if tran.from == from and tran.event == event then
-            return tran, true
-        end
-    end
+    local existTran = nil
+    local bFind = false
 
-    return nil, false
+    self.transitions:foreach(function(i, tran)
+        if tran.from == from and tran.event == event then
+            existTran = tran
+            bFind = true
+            return false
+        end
+
+        return true
+    end)
+
+    -- for i, tran in ipairs(self.transitions) do
+    --     if tran.from == from and tran.event == event then
+    --         return tran, true
+    --     end
+    -- end
+
+    return existTran, bFind
 end
 
 --- start

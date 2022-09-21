@@ -31,26 +31,43 @@ function SequenceNode:execute()
 
     self.state = Const.BNODE_STAT_EXECUTING
 
-    for i, child in ipairs(self.subNodes) do
+    self.subNodes:foreach(function(i, child)
         if child:isCompleted() then
-            goto continue
+            return true
         end
 
         child:execute()
-        if not child:isCompleted() then
-            break
+        if child:isCompleted() then
+            if child:getState() == Const.BNODE_STAT_FAIL then
+                self.state = Const.BNODE_STAT_FAIL
+            elseif i == self.subNodes.size() then
+                self.state = Const.BNODE_STAT_SUCC
+            end
         end
 
-        if child:getState() == Const.BNODE_STAT_FAIL then
-            self.state = Const.BNODE_STAT_FAIL
-        elseif i == #(self.subNodes) then
-            self.state = Const.BNODE_STAT_SUCC
-        end
+        return false
+    end)
 
-        break
+    -- for i, child in ipairs(self.subNodes) do
+    --     if child:isCompleted() then
+    --         goto continue
+    --     end
 
-        ::continue::
-    end
+    --     child:execute()
+    --     if not child:isCompleted() then
+    --         break
+    --     end
+
+    --     if child:getState() == Const.BNODE_STAT_FAIL then
+    --         self.state = Const.BNODE_STAT_FAIL
+    --     elseif i == #(self.subNodes) then
+    --         self.state = Const.BNODE_STAT_SUCC
+    --     end
+
+    --     break
+
+    --     ::continue::
+    -- end
 end
 
 return SequenceNode

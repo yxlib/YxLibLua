@@ -40,23 +40,41 @@ end
 function ControlNode:removeChild(child)
     assert(child, "child is nil")
 
-    for i, exist in ipairs(self.subNodes) do
+    self.subNodes:foreach(function(i, exist)
         if exist == child then
             self.subNodes:erase(i)
-            break
+            return false
         end
-    end
+
+        return true
+    end)
+
+    -- for i, exist in ipairs(self.subNodes) do
+    --     if exist == child then
+    --         self.subNodes:erase(i)
+    --         break
+    --     end
+    -- end
 end
 
 --- remove child by id
 ---@param nodeId number @node id of child
 function ControlNode:removeChildById(nodeId)
-    for i, exist in ipairs(self.subNodes) do
+    self.subNodes:foreach(function(i, exist)
         if exist:getId() == nodeId then
             self.subNodes:erase(i)
-            break
+            return false
         end
-    end
+
+        return true
+    end)
+
+    -- for i, exist in ipairs(self.subNodes) do
+    --     if exist:getId() == nodeId then
+    --         self.subNodes:erase(i)
+    --         break
+    --     end
+    -- end
 end
 
 --- get child by id
@@ -64,13 +82,26 @@ end
 ---@return IBehaviorNode @child
 ---@return boolean @ok
 function ControlNode:getChildById(nodeId)
-    for i, exist in ipairs(self.subNodes) do
-        if exist:getId() == nodeId then
-            return exist, true
-        end
-    end
+    local findNode = nil
+    local bFind = false
 
-    return nil, false
+    self.subNodes:foreach(function(i, exist)
+        if exist:getId() == nodeId then
+            findNode = exist
+            bFind = true
+            return false
+        end
+
+        return true
+    end)
+
+    -- for i, exist in ipairs(self.subNodes) do
+    --     if exist:getId() == nodeId then
+    --         return exist, true
+    --     end
+    -- end
+
+    return findNode, bFind
 end
 
 return ControlNode

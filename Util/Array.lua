@@ -11,11 +11,16 @@ local Array = {
 }
 class(Array, "Array", nil)
 
+--- ctor method
+function Array:_ctor(...)
+    self.internal = {}
+end
+
 --- clone the array
 ---@return Array @the clone one
 function Array:clone()
-    local o = {table.unpack(self)}
-    setmetatable(o, Array) -- bind class
+    local o = Array.new()
+    o.internal = {table.unpack(self.internal)}
 
     return o
 end
@@ -25,30 +30,38 @@ end
 function Array:pushBack(value)
     assert(value, "value is nil")
 
-    table.insert(self, value)
+    table.insert(self.internal, value)
 end
 
 --- pop item at the last index of the array
 ---@return any @the last item
 function Array:popBack()
-    assert(#self > 0, "empty array")
+    assert(#self.internal > 0, "empty array")
     
-    local value = self[#self]
-    table.remove(self)
+    local value = self.internal[#self.internal]
+    table.remove(self.internal)
     return value
 end
 
 --- erase the item at the index idx of the array
 ---@param idx number
 function Array:erase(idx)
-    assert((idx > 0 and idx <= #self), "idx out of range")
-    table.remove(self, idx)
+    assert((idx > 0 and idx <= #self.internal), "idx out of range")
+    table.remove(self.internal, idx)
+end
+
+--- get item at the index idx of the array
+---@param idx number
+function Array:at(idx)
+    assert((idx > 0 and idx <= #self.internal), "idx out of range")
+
+    return self.internal[idx]
 end
 
 --- get the size of the array
 ---@return number
 function Array:size()
-    return #self
+    return #self.internal
 end
 
 --- iterate all items of the array
@@ -56,7 +69,7 @@ end
 function Array:foreach(callback)
     assert(callback, "callback is nil")
 
-    for i, v in ipairs(self) do
+    for i, v in ipairs(self.internal) do
         local bContinue = callback(i, v)
         if not bContinue then
             break
