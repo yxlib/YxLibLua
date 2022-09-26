@@ -47,7 +47,7 @@ end
 ---@param obj any
 ---@param cb function @(msg: Msg) => void
 function Dispatcher:removeObserver(obj, cb)
-    assert(obj, "object is nil")
+    -- assert(obj, "object is nil")
     assert(cb, "callback is nil")
 
     for i = self.observers:size(), 1, -1 do
@@ -74,7 +74,8 @@ end
 
 --- notify
 ---@param params any[] @any array
-function Dispatcher:notify(params)
+function Dispatcher:notify(...)
+    local params = {...}
     local msg = Msg.new(self.msgName, params)
     local observers = self.observers:clone()
 
@@ -83,7 +84,12 @@ function Dispatcher:notify(params)
             return true
         end
 
-        observer.callback(observer.object, msg)
+        if observer.object ~= nil then
+            observer.callback(observer.object, msg)
+        else
+            observer.callback(msg)
+        end
+        
         if observer.once then
             self:removeObserver(observer.object, observer.callback)
         end
@@ -110,7 +116,7 @@ end
 ---@param cb function @(msg: Msg) => void
 ---@param once boolean
 function Dispatcher:_addObserverImpl(obj, cb, once)
-    assert(obj, "object is nil")
+    -- assert(obj, "object is nil")
     assert(cb, "callback is nil")
 
     if self:_isObserverExist(obj, cb) then
