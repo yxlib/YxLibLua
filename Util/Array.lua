@@ -58,6 +58,14 @@ function Array:at(idx)
     return self.internal[idx]
 end
 
+--- set item at the index idx of the array
+---@param idx number
+---@param val any
+function Array:set(idx, val)
+    assert((idx > 0 and idx <= #self.internal), "idx out of range")
+    self.internal[idx] = val
+end
+
 --- get the size of the array
 ---@return number
 function Array:size()

@@ -5,6 +5,8 @@
 local Util = require("LuaScripts.YxLibLua.Util.Util")
 local Grid = require("LuaScripts.YxLibLua.Nav.Grid")
 
+local logger = Util.Logger.new("Monster")
+
 ---@class BasePathFinder @BasePathFinder class
 ---@field impl IPathFinderImpl @implement
 ---@field openList Array @open list
@@ -37,7 +39,7 @@ end
 ---@param navMap INavigationMap @navigation map
 ---@param startGrid Grid @start grid
 ---@param dstGrid Grid @dest grid
----@return IPathNode[] @path nodes
+---@return Array @IPathNode array
 ---@return boolean @is success
 function BasePathFinder:findPath(navMap, startGrid, dstGrid)
     local fullPath, bSucc, bFinish = self:preCheck(navMap, startGrid, dstGrid)
@@ -48,11 +50,7 @@ function BasePathFinder:findPath(navMap, startGrid, dstGrid)
     local firstNode = self.impl:createFirstNode(startGrid.col, startGrid.row)
     self:addNodeToOpenList(firstNode)
     
-    while true do
-        if #(self.openList) == 0 then
-            break
-        end
-
+    while self.openList:size() > 0 do
         local node, ok = self:popMinValueNode(navMap, dstGrid)
         if not ok then
             break
@@ -71,15 +69,17 @@ end
 ---@param navMap INavigationMap @navigation map
 ---@param startGrid Grid @start grid
 ---@param dstGrid Grid @dest grid
----@return IPathNode[] @path nodes
+---@return Array @IPathNode array
 ---@return boolean @is success
 ---@return boolean @is finish
 function BasePathFinder:preCheck(navMap, startGrid, dstGrid)
     if not navMap:canCross(startGrid.col, startGrid.row) then
+        logger:w("start grid can not cross")
         return nil, false, true
     end
 
     if not navMap:canCross(dstGrid.col, dstGrid.row) then
+        logger:w("dest grid can not cross")
         return nil, false, true
     end
 
@@ -180,16 +180,12 @@ function BasePathFinder:updateExistList(navMap, col, row, parent, vecParent, min
         exist, ok = self:getCloseNode(col, row)
     end
 
-    if ok then
-        if exist:getMinGValue() > minGValue then
-            exist:updateParent(parent, vecParent)
-            exist:setMinGValue(minGValue, navMap)
-        end
-
-        return true
+    if ok and exist:getMinGValue() > minGValue then
+        exist:updateParent(parent, vecParent)
+        exist:setMinGValue(minGValue, navMap)
     end
 
-    return false
+    return ok
 end
 
 --- pop min value node
@@ -235,6 +231,7 @@ end
 --- calculate H value
 ---@param node IPathNode @node to calculate
 ---@param dstGrid Grid @dest grid
+---@param baseGValue number @base G value
 ---@return number @H value
 function BasePathFinder:calH(node, dstGrid, baseGValue)
     local grid = node:getGrid()
@@ -244,33 +241,30 @@ function BasePathFinder:calH(node, dstGrid, baseGValue)
 end
 
 --- get full path
----@return IPathNode[] @path nodes
+---@return Array @IPathNode array
 ---@return boolean @is success
 function BasePathFinder:getFullPath()
-    if self.lastNode ~= nil then
+    if self.lastNode == nil then
         return nil, false
     end
 
     local fullPath = Util.Array.new()
     local node = self.lastNode
-    while true do
+    while node ~= nil do
         fullPath:pushBack(node)
-        local parent = node:getParent()
-        if parent == nil then
-            break
-        end
-
-        node = parent
+        node = node:getParent()
     end
 
-    local fullPathLen = #fullPath
+    local fullPathLen = fullPath:size()
     local step = math.floor(fullPathLen / 2)
     for i = 1, step, 1 do
         local j = fullPathLen - i + 1
-        local tmp = fullPath[i]
-        fullPath[i] = fullPath[j]
-        fullPath[j] = tmp
+        local tmp = fullPath:at(i)
+        fullPath:set(i, fullPath:at(j))
+        fullPath:set(j, tmp)
     end
+
+    return fullPath, true
 end
 
 return BasePathFinder

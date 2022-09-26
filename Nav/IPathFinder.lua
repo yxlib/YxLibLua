@@ -17,7 +17,7 @@ function IPathFinder:reset() end
 ---@param navMap INavigationMap @navigation map
 ---@param startGrid Grid @start grid
 ---@param dstGrid Grid @dest grid
----@return IPathNode[] @path nodes
+---@return Array @IPathNode array
 ---@return boolean @is success
 function IPathFinder:findPath(navMap, startGrid, dstGrid) end
 

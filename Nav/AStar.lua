@@ -74,7 +74,7 @@ function AStar:handleGrid(navMap, col, row, parent, dstGrid)
         return false
     end
 
-    if navMap:canCross(col, row) then
+    if not navMap:canCross(col, row) then
         return false
     end
 
