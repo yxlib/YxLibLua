@@ -9,12 +9,25 @@ local AgentFsmState = require("LuaScripts.YxLibLua.Agent.AgentFsmState")
 local AgentState = require("LuaScripts.YxLibLua.Agent.AgentState")
 local AgentFsmAction = require("LuaScripts.YxLibLua.Agent.AgentFsmAction")
 
+---@class AgentCb @AgentCb class
+local AgentCb = {
+    ---@param obj any @obj
+    ---@param func function @function
+    ---@return AgentCb @AgentCb object
+    new = function(obj, func) end
+}
+class(AgentCb, "AgentCb", nil)
+
+--- ctor method
+function AgentCb:_ctor(...)
+    local params = {...}
+    self.obj = params[1]
+    self.func = params[2]
+end
+
+
 ---@class BaseAgent @BaseAgent class
 ---@field agentId number @agent id
----@field fsm FsmMachine  @fsm
----@field dictName2State Dict @bind name and AgentFsmState
----@field dictName2FsmActionFunc Dict @bind name and fsm action
----@field dictId2BNodeActionFunc Dict @bind name and behavior tree action
 local BaseAgent = {
     ---@param agentId number @agent id
     ---@return BaseAgent @BaseAgent object
@@ -75,18 +88,19 @@ end
 
 --- add state
 ---@param name string @state name
+---@param obj any @object to invoke callback functions
 ---@param bt BehaviorTree @behavior tree
 ---@param enterFunc function @function(fromState string)
 ---@param updateFunc function @function(dt number)
 ---@param exitFunc function @function(toState string)
-function BaseAgent:addState(name, bt, enterFunc, updateFunc, exitFunc)
+function BaseAgent:addState(name, obj, bt, enterFunc, updateFunc, exitFunc)
     assert(name, "name is nil")
     assert(name ~= "", "name is empty")
 
     local stat = AgentFsmState.new(name, self)
     self.fsm:addState(name, stat)
 
-    local agentState = AgentState.new(bt, enterFunc, updateFunc, exitFunc)
+    local agentState = AgentState.new(obj, bt, enterFunc, updateFunc, exitFunc)
     self.dictName2State:set(name, agentState)
 end
 
@@ -106,14 +120,17 @@ end
 
 --- add action
 ---@param name string @action name
+---@param obj any @object to invoke callback functions
 ---@param actionFunc function @function(evt string, ...)
-function BaseAgent:addAction(name, actionFunc)
+function BaseAgent:addAction(name, obj, actionFunc)
     assert(name, "name is nil")
     assert(name ~= "", "name is empty")
 
     local act = AgentFsmAction.new(name, self)
     self.fsm:addAction(name, act)
-    self.dictName2FsmActionFunc:set(name, actionFunc)
+
+    local cb = AgentCb.new(obj, actionFunc)
+    self.dictName2FsmActionFunc:set(name, cb)
 end
 
 --- remove action
@@ -148,11 +165,14 @@ end
 
 --- add behavior tree action
 ---@param actionId number @action id
+---@param obj any @object to invoke callback functions
 ---@param handleFunc function @function(node IBehaviorNode, ...)
-function BaseAgent:addBNodeActionHandleFunc(actionId, handleFunc)
-    local existFunc, ok = self.dictId2BNodeActionFunc:get(actionId)
+function BaseAgent:addBNodeActionHandleFunc(actionId, obj, handleFunc)
+    local existCb, ok = self.dictId2BNodeActionFunc:get(actionId)
     assert(not ok, "handle func exist")
-    self.dictId2BNodeActionFunc:set(actionId, handleFunc)
+
+    local cb = AgentCb.new(obj, handleFunc)
+    self.dictId2BNodeActionFunc:set(actionId, cb)
 end
 
 
@@ -165,9 +185,15 @@ function BaseAgent:onEnterFsmState(state, fromState)
     assert(state, "state is nil")
     assert(state ~= "", "state is empty")
 
+    ---@type AgentState
+    ---@type boolean
     local agentState, ok = self.dictName2State:get(state)
     if ok and agentState.enterFunc ~= nil then
-        agentState.enterFunc(self, fromState)
+        if agentState.obj ~= nil then
+            agentState.enterFunc(agentState.obj, fromState)
+        else
+            agentState.enterFunc(fromState)
+        end
     end
 end
 
@@ -178,13 +204,21 @@ function BaseAgent:onUpdateFsmState(state, dt)
     assert(state, "state is nil")
     assert(state ~= "", "state is empty")
 
+    ---@type AgentState
+    ---@type boolean
     local agentState, ok = self.dictName2State:get(state)
-    if ok then
-        if agentState.updateFunc ~= nil then
-            agentState.updateFunc(self, dt)
-        elseif agentState.bt ~= nil then
-            agentState.bt:execute()
+    if not ok then
+        return
+    end
+
+    if agentState.updateFunc ~= nil then
+        if agentState.obj ~= nil then
+            agentState.updateFunc(agentState.obj, dt)
+        else
+            agentState.updateFunc(dt)
         end
+    elseif agentState.bt ~= nil then
+        agentState.bt:execute()
     end
 end
 
@@ -195,9 +229,15 @@ function BaseAgent:onExitFsmState(state, toState)
     assert(state, "state is nil")
     assert(state ~= "", "state is empty")
 
+    ---@type AgentState
+    ---@type boolean
     local agentState, ok = self.dictName2State:get(state)
     if ok and agentState.exitFunc ~= nil then
-        agentState.exitFunc(self, toState)
+        if agentState.obj ~= nil then
+            agentState.exitFunc(agentState.obj, toState)
+        else
+            agentState.exitFunc(toState)
+        end
     end
 end
 
@@ -210,9 +250,15 @@ function BaseAgent:onFsmAction(action, evt, ...)
     assert(action, "action is nil")
     assert(action ~= "", "action is empty")
 
-    local actionFunc, ok = self.dictName2FsmActionFunc:get(action)
+    ---@type AgentCb
+    ---@type boolean
+    local actionCb, ok = self.dictName2FsmActionFunc:get(action)
     if ok then
-        return actionFunc(self, action, evt, ...)
+        if actionCb.obj ~= nil then
+            return actionCb.func(actionCb.obj, action, evt, ...)
+        else
+            return actionCb.func(action, evt, ...)
+        end
     end
 
     return false
@@ -224,9 +270,15 @@ end
 ---@return number @behavior node state
 function BaseAgent:onBNodeAction(node, params)
     local actionId = node:getActionId()
-    local actionFunc, ok = self.dictId2BNodeActionFunc:get(actionId)
+    ---@type AgentCb
+    ---@type boolean
+    local actionCb, ok = self.dictId2BNodeActionFunc:get(actionId)
     if ok then
-        return actionFunc(self, node, params)
+        if actionCb.obj ~= nil then
+            return actionCb.func(actionCb.obj, node, params)
+        else
+            return actionCb.func(node, params)
+        end
     end
 
     return BT.Const.BNODE_STAT_NOT_EXECUTE

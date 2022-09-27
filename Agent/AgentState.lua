@@ -6,27 +6,30 @@ local Util = require("LuaScripts.YxLibLua.Util.Util")
 local BT = require("LuaScripts.YxLibLua.BT.BT")
 
 ---@class AgentState @AgentState class
+---@field obj any @object to invoke callback functions
 ---@field bt BehaviorTree @behavior tree
 ---@field enterFunc function @function(fromState string)
 ---@field updateFunc function @function(dt number)
 ---@field exitFunc function @function(toState string)
 local AgentState = {
+    ---@param obj any @object to invoke callback functions
     ---@param bt BehaviorTree @behavior tree
     ---@param enterFunc function @function(fromState string)
     ---@param updateFunc function @function(dt number)
     ---@param exitFunc function @function(toState string)
     ---@return AgentState @AgentState object
-    new = function(bt, enterFunc, updateFunc, exitFunc) end
+    new = function(obj, bt, enterFunc, updateFunc, exitFunc) end
 }
 class(AgentState, "AgentState", nil)
 
 --- ctor method
 function AgentState:_ctor(...)
     local params = {...}
-    self.bt = params[1]
-    self.enterFunc = params[2]
-    self.updateFunc = params[3]
-    self.exitFunc = params[4]
+    self.obj = params[1]
+    self.bt = params[2]
+    self.enterFunc = params[3]
+    self.updateFunc = params[4]
+    self.exitFunc = params[5]
 end
 
 return AgentState

@@ -7,12 +7,6 @@ local BT = require("LuaScripts.YxLibLua.BT.BT")
 local IAgentBNodeListener = require("LuaScripts.YxLibLua.Agent.IAgentBNodeListener")
 
 ---@class AgentBNode : BaseBehaviorNode @AgentBNode class
----@field nodeId number @node id
----@field actionId number @action id
----@field maxStep number @max step
----@field nodeType number @node type
----@field state number @state
----@field step number @step
 ---@field listener IAgentBNodeListener @listener
 ---@field params any[] @params
 local AgentBNode = {
