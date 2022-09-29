@@ -22,6 +22,13 @@ function Grid:_ctor(...)
     self.row = params[2]
 end
 
+--- clone
+---@return Grid @clone grid
+function Grid:clone()
+    local grid = Grid.new(self.col, self.row)
+    return grid
+end
+
 --- update
 ---@param col number @col
 ---@param row number @row
